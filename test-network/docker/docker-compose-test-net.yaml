@@ -28,6 +28,16 @@ services:
       - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
       - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
       - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:17050
+      # Trial from sandbox
+      - ORDERER_GENERAL_TLS_CLIENTAUTHREQUIRED=true
+      # also from sandbox, to see the trial results better
+      - ORDERER_GENERAL_LOGLEVEL=DEBUG
+      # # # Try this if the first test fails
+      # - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      # # # Probably not useful
+      # - ORDERER_GENERAL_CLUSTER_SENDBUFFERSIZE=50
+      # - ORDERER_CONSENSUS_WALDIR=/var/hyperledger/production/orderer/etcdraft/wal
+      # - ORDERER_CONSENSUS_SNAPDIR=/var/hyperledger/production/orderer/etcdraft/snapshot
       # enabled TLS
       - ORDERER_GENERAL_TLS_ENABLED=true
       - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
@@ -65,6 +75,12 @@ services:
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Trial from sandbox
+      - CORE_PEER_TLS_CLIENTAUTHREQUIRED=true
+      # # # Probably not useful
+      # - CORE_CHAINCODE_BUILDER=$IMAGE_NS/fabric-ccenv:$IMAGE_TAG
+      # - CORE_CHAINCODE_STARTUPTIMEOUT=500s
+      # - CORE_PEER_GOSSIP_ORGLEADER=true
       # Peer specific variabes
       - CORE_PEER_ID=peer0.org1.example.com
       - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
@@ -102,6 +118,12 @@ services:
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Trial from sandbox
+      - CORE_PEER_TLS_CLIENTAUTHREQUIRED=true
+      # # # Probably not useful
+      # - CORE_CHAINCODE_BUILDER=$IMAGE_NS/fabric-ccenv:$IMAGE_TAG
+      # - CORE_CHAINCODE_STARTUPTIMEOUT=500s
+      # - CORE_PEER_GOSSIP_ORGLEADER=true
       # Peer specific variabes
       - CORE_PEER_ID=peer0.org2.example.com
       - CORE_PEER_ADDRESS=peer0.org2.example.com:9051
@@ -133,8 +155,13 @@ services:
     environment:
       - GOPATH=/opt/gopath
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - FABRIC_LOGGING_SPEC=INFO
-      #- FABRIC_LOGGING_SPEC=DEBUG
+      #- FABRIC_LOGGING_SPEC=INFO
+      - FABRIC_LOGGING_SPEC=DEBUG
+      # Trial from sandbox
+      - CORE_PEER_TLS_CLIENTAUTHREQUIRED=true
+      # # # Try this if the first test fails
+      # - CORE_PEER_TLS_CLIENTCERT_FILE=/crypto-config/peerOrganizations/org1.luther.systems/peers/peer0.org1.luther.systems/tls/server.crt
+      # - CORE_PEER_TLS_CLIENTKEY_FILE=/crypto-config/peerOrganizations/org1.luther.systems/peers/peer0.org1.luther.systems/tls/server.key
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
     volumes:
